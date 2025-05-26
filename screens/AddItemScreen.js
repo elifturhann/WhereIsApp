@@ -12,7 +12,8 @@ import {
 import { ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
+
 
 const AddItemScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -21,37 +22,34 @@ const AddItemScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
 
   const saveItem = async () => {
-    if (!name.trim() || !description.trim()) {
-      Alert.alert('Validation Error', 'Name and Description are required.');
-      return;
-    }
+  if (!name.trim() || !description.trim()) {
+    Alert.alert('Validation Error', 'Name and Description are required.');
+    return;
+  }
 
-    const newItem = {
-      id: Date.now().toString(),
-      name,
-      description,
-      photoUri,
-      location,
-    };
-
-    try {
-      const stored = await AsyncStorage.getItem('items');
-      const items = stored ? JSON.parse(stored) : [];
-
-      items.push(newItem);
-
-      await AsyncStorage.setItem('items', JSON.stringify(items));
-
-      console.log('✔ Item saved successfully');
-      console.log('Saved items:', items);
-
-      Alert.alert('Success', 'Item saved!');
-      navigation.goBack();
-    } catch (e) {
-      console.error('❌ Save error:', e);
-      Alert.alert('Error', 'Failed to save item.');
-    }
+  const newItem = {
+    id: Date.now().toString(),
+    name,
+    description,
+    photoUri,
+    location,
   };
+
+  try {
+    const stored = await SecureStore.getItemAsync('items');
+    const items = stored ? JSON.parse(stored) : [];
+
+    items.push(newItem);
+
+    await SecureStore.setItemAsync('items', JSON.stringify(items));
+
+    Alert.alert('Success', 'Item saved!');
+    navigation.goBack();
+  } catch (e) {
+    console.error('❌ Save error:', e);
+    Alert.alert('Error', 'Failed to save item.');
+  }
+};
 
   // NEW: handle photo taking with expo-image-picker
   const handlePhoto = async () => {
@@ -151,9 +149,22 @@ const AddItemScreen = ({ navigation }) => {
 
 
         <View style={styles.saveButtonWrapper}>
-    <TouchableOpacity style={styles.button} onPress={saveItem}>
-        <Text style={styles.buttonText}> Save</Text>
-    </TouchableOpacity>
+        <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          Alert.alert(
+            'Confirm Save',
+            'Are you sure you want to save this item?',
+            [
+              { text: 'Cancel', style: 'cancel' },
+              { text: 'Save', onPress: saveItem },
+            ]
+          );
+        }}
+      >
+  <Text style={styles.buttonText}> Save</Text>
+</TouchableOpacity>
+
     </View>
         
     </ScrollView>

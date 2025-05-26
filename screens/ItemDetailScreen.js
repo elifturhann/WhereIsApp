@@ -8,9 +8,9 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ScrollView } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 
@@ -53,7 +53,7 @@ const ItemDetailScreen = ({ route, navigation }) => {
 
   const updateItem = async () => {
     try {
-      const stored = await AsyncStorage.getItem('items');
+      const stored = await SecureStore.getItemAsync('items');
       const items = stored ? JSON.parse(stored) : [];
 
       const updated = items.map(i =>
@@ -62,7 +62,7 @@ const ItemDetailScreen = ({ route, navigation }) => {
           : i
       );
 
-      await AsyncStorage.setItem('items', JSON.stringify(updated));
+      await SecureStore.setItemAsync('items', JSON.stringify(updated));
       Alert.alert("Success", "Item updated!");
       navigation.goBack();
     } catch (error) {
@@ -77,11 +77,11 @@ const ItemDetailScreen = ({ route, navigation }) => {
       {
         text: "Delete", style: "destructive", onPress: async () => {
           try {
-            const stored = await AsyncStorage.getItem('items');
+            const stored = await SecureStore.getItemAsync('items');
             const items = stored ? JSON.parse(stored) : [];
 
             const filtered = items.filter(i => i.id !== item.id);
-            await AsyncStorage.setItem('items', JSON.stringify(filtered));
+            await SecureStore.setItemAsync('items', JSON.stringify(filtered));
             Alert.alert("Deleted", "Item has been deleted.");
             navigation.goBack();
           } catch (error) {
@@ -95,7 +95,6 @@ const ItemDetailScreen = ({ route, navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-    
       <Text style={styles.label}>Name:</Text>
       <TextInput
         style={styles.input}
@@ -122,12 +121,9 @@ const ItemDetailScreen = ({ route, navigation }) => {
       ) : (
         <Text style={styles.placeholder}>No photo selected</Text>
       )}
-       <TouchableOpacity
-        style={styles.button}
-        onPress={takeNewPhoto}>
-        <Text style={styles.buttonText}>Take New Photo </Text>
-        </TouchableOpacity>
-
+      <TouchableOpacity style={styles.button} onPress={takeNewPhoto}>
+        <Text style={styles.buttonText}>Take New Photo</Text>
+      </TouchableOpacity>
 
       <Text style={styles.label}>GPS Location:</Text>
       {location ? (
@@ -138,23 +134,17 @@ const ItemDetailScreen = ({ route, navigation }) => {
       ) : (
         <Text style={styles.placeholder}>No location saved</Text>
       )}
-      <TouchableOpacity
-        style={styles.button}
-        onPress={updateGPS}>
+      <TouchableOpacity style={styles.button} onPress={updateGPS}>
         <Text style={styles.buttonText}>Update Location</Text>
       </TouchableOpacity>
 
-    
+      <TouchableOpacity style={styles.button} onPress={updateItem}>
+        <Text style={styles.buttonText}>Save Changes</Text>
+      </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} onPress={updateItem}>
-        <Text style={styles.buttonText}> Save Changes</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#D9534F' }]} onPress={deleteItem}>
-        <Text style={styles.buttonText}> Delete Item</Text>
-        </TouchableOpacity>
-
-
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#D9534F' }]} onPress={deleteItem}>
+        <Text style={styles.buttonText}>Delete Item</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -162,16 +152,16 @@ const ItemDetailScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-     backgroundColor: '#FFFDF6',
+    backgroundColor: '#FFFDF6',
     flex: 1,
   },
   label: {
     fontSize: 16,
-     color: '#6F7863',
+    color: '#6F7863',
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 4,
-    fontFamily:'Delius'
+    fontFamily: 'Delius',
   },
   input: {
     borderWidth: 1,
@@ -180,8 +170,8 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     marginBottom: 10,
-     marginTop: 2,
-     fontFamily:'Delius'
+    marginTop: 2,
+    fontFamily: 'Delius',
   },
   textArea: {
     height: 40,
@@ -204,24 +194,23 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#555',
   },
-  
   button: {
-  backgroundColor: '#A3B8B1', 
-  paddingVertical: 10,
-  paddingHorizontal: 10,
-  borderRadius: 10,
-  marginVertical: 5,
-  width: '50%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  alignSelf: 'center',
-},
-buttonText: {
-  color: '#FFFDF6',
-  fontSize: 16,
-  fontWeight: 'bold',
-  fontFamily:'Delius'
-},
+    backgroundColor: '#A3B8B1',
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginVertical: 5,
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  buttonText: {
+    color: '#FFFDF6',
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'Delius',
+  },
 });
 
 export default ItemDetailScreen;

@@ -96,7 +96,7 @@ buttonText: {
     width: 200,
     height: 200,
     backgroundColor: '#B3C1B7',
-    bottom: -50,
+    bottom: 70,
     left: -60,
     transform: [{ rotate: '15deg' }],
   },
@@ -111,7 +111,7 @@ buttonText: {
   blob5: {
     width: 100,
     height: 100,
-    backgroundColor: '#FFFDF6',
+    backgroundColor: '#F1EEE3',
     bottom: 50,
     left: 130,
     transform: [{ rotate: '30deg' }],

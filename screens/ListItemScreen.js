@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 
 const ListItemsScreen = ({ navigation }) => {
   const [items, setItems] = useState([]);
@@ -17,10 +17,14 @@ const ListItemsScreen = ({ navigation }) => {
 
   useEffect(() => {
     const loadItems = async () => {
-      const stored = await AsyncStorage.getItem('items');
-      const data = stored ? JSON.parse(stored) : [];
-      setItems(data);
-      setFilteredItems(data); // initialize filtered list
+      try {
+        const stored = await SecureStore.getItemAsync('items');
+        const data = stored ? JSON.parse(stored) : [];
+        setItems(data);
+        setFilteredItems(data);
+      } catch (e) {
+        console.error("🔐 Failed to load encrypted items:", e);
+      }
     };
 
     const unsubscribe = navigation.addListener('focus', loadItems);
@@ -65,7 +69,6 @@ const ListItemsScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
-      
     </View>
   );
 };
@@ -82,22 +85,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ccc',
-    fontFamily:'Delius'
+    fontFamily: 'Delius',
   },
-  
   itemContainer: {
-  backgroundColor: '#EEE5DA',
-  padding: 15,
-  borderRadius: 12,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.1,
-  shadowRadius: 4,
-  elevation: 3, // Android shadow
-  marginBottom: 15,
-  flexDirection: 'row',
-  alignItems: 'center',
-},
+    backgroundColor: '#EEE5DA',
+    padding: 15,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   thumbnail: {
     width: 60,
     height: 60,
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
-    fontFamily:'Delius'
+    fontFamily: 'Delius',
   },
 });
 
