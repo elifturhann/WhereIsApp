@@ -14,7 +14,7 @@ const LandingScreen = ({ navigation }) => {
 
       {/* Foreground Content */}
       <View style={styles.content}>
-        <Text style={styles.title}>Where Is App</Text>
+        <Text style={styles.title}>Where is?</Text>
         
         <View style={styles.spacing} />
 
@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: '#A6ACA7',
+    color: '#6F7863',
     fontWeight: '600',
     letterSpacing: 2,
+    fontFamily:'Delius'
   },
   button: {
   backgroundColor: '#A3B8B1', 
@@ -63,8 +64,9 @@ const styles = StyleSheet.create({
 },
 buttonText: {
   color: '#FFFDF6',
-  fontSize: 16,
+  fontSize: 18,
   fontWeight: 'bold',
+  fontFamily:'Delius',
 },
 
   spacing: {

@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ccc',
+    fontFamily:'Delius'
   },
   
   itemContainer: {
@@ -105,6 +106,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 18,
+    fontFamily:'Delius'
   },
 });
 

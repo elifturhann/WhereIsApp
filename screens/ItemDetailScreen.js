@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 4,
+    fontFamily:'Delius'
   },
   input: {
     borderWidth: 1,
@@ -179,10 +180,11 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     marginBottom: 10,
-     marginTop: 6,
+     marginTop: 2,
+     fontFamily:'Delius'
   },
   textArea: {
-    height: 60,
+    height: 40,
   },
   image: {
     width: 150,
@@ -205,7 +207,7 @@ const styles = StyleSheet.create({
   
   button: {
   backgroundColor: '#A3B8B1', 
-  paddingVertical: 12,
+  paddingVertical: 10,
   paddingHorizontal: 10,
   borderRadius: 10,
   marginVertical: 5,
@@ -218,6 +220,7 @@ buttonText: {
   color: '#FFFDF6',
   fontSize: 16,
   fontWeight: 'bold',
+  fontFamily:'Delius'
 },
 });
 

@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     color: '#6F7863',
     fontWeight: 'bold',
     marginBottom: 4,
+    fontFamily:'Delius'
   },
   input: {
     borderColor: '#ccc',
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 10,
     padding: 8,
+    fontFamily:'Delius'
     
   },
   button: {
@@ -197,6 +199,7 @@ buttonText: {
   color: '#FFFDF6',
   fontSize: 16,
   fontWeight: 'bold',
+  fontFamily:'Delius'
 },
 saveButtonWrapper: {
   marginTop: 'auto', 
@@ -212,6 +215,7 @@ gpsText:{
     fontWeight: 'bold',
     color: '#6F7863',
     textAlign: 'center',
+    fontFamily:'Delius'
 },
   image: {
     marginVertical: 40,
