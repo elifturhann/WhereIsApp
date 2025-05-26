@@ -7,8 +7,10 @@ import {
   Button,
   StyleSheet,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 
@@ -92,8 +94,9 @@ const ItemDetailScreen = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Name</Text>
+    <ScrollView contentContainerStyle={styles.container}>
+    
+      <Text style={styles.label}>Name:</Text>
       <TextInput
         style={styles.input}
         value={name}
@@ -101,7 +104,7 @@ const ItemDetailScreen = ({ route, navigation }) => {
         placeholder="Enter item name"
       />
 
-      <Text style={styles.label}>Description</Text>
+      <Text style={styles.label}>Description:</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
         value={description}
@@ -110,7 +113,7 @@ const ItemDetailScreen = ({ route, navigation }) => {
         multiline
       />
 
-      <Text style={styles.label}>Photo</Text>
+      <Text style={styles.label}>Photo:</Text>
       {photoUri ? (
         <>
           <Image source={{ uri: photoUri }} style={styles.image} />
@@ -119,9 +122,14 @@ const ItemDetailScreen = ({ route, navigation }) => {
       ) : (
         <Text style={styles.placeholder}>No photo selected</Text>
       )}
-      <Button title="Take New Photo" onPress={takeNewPhoto} />
+       <TouchableOpacity
+        style={styles.button}
+        onPress={takeNewPhoto}>
+        <Text style={styles.buttonText}>Take New Photo </Text>
+        </TouchableOpacity>
 
-      <Text style={styles.label}>GPS Location</Text>
+
+      <Text style={styles.label}>GPS Location:</Text>
       {location ? (
         <Text style={styles.gpsText}>
           Latitude: {location.latitude}{"\n"}
@@ -130,25 +138,36 @@ const ItemDetailScreen = ({ route, navigation }) => {
       ) : (
         <Text style={styles.placeholder}>No location saved</Text>
       )}
-      <Button title="Update GPS Location" onPress={updateGPS} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={updateGPS}>
+        <Text style={styles.buttonText}>Update Location</Text>
+      </TouchableOpacity>
 
-      <View style={styles.buttonGroup}>
-        <Button title="Save Changes" onPress={updateItem} />
-        <View style={{ marginTop: 10 }}>
-          <Button title="Delete Item" color="red" onPress={deleteItem} />
-        </View>
-      </View>
-    </View>
+    
+
+        <TouchableOpacity style={styles.button} onPress={updateItem}>
+        <Text style={styles.buttonText}> Save Changes</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#D9534F' }]} onPress={deleteItem}>
+        <Text style={styles.buttonText}> Delete Item</Text>
+        </TouchableOpacity>
+
+
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+     backgroundColor: '#FFFDF6',
     flex: 1,
   },
   label: {
     fontSize: 16,
+     color: '#6F7863',
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 4,
@@ -160,9 +179,10 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     marginBottom: 10,
+     marginTop: 6,
   },
   textArea: {
-    height: 80,
+    height: 60,
   },
   image: {
     width: 150,
@@ -182,9 +202,23 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     color: '#555',
   },
-  buttonGroup: {
-    marginTop: 20,
-  },
+  
+  button: {
+  backgroundColor: '#A3B8B1', 
+  paddingVertical: 12,
+  paddingHorizontal: 10,
+  borderRadius: 10,
+  marginVertical: 5,
+  width: '50%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  alignSelf: 'center',
+},
+buttonText: {
+  color: '#FFFDF6',
+  fontSize: 16,
+  fontWeight: 'bold',
+},
 });
 
 export default ItemDetailScreen;

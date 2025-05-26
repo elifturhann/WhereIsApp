@@ -9,7 +9,7 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
-
+import { ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -101,7 +101,10 @@ const AddItemScreen = ({ navigation }) => {
 }};
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+        <View style={[styles.blob, styles.blob1]} />
+        <View style={[styles.blob, styles.blob2]} />
+        <View style={[styles.blob, styles.blob3]} />
       <Text style={styles.label}>Thing Name *</Text>
       <TextInput
         value={name}
@@ -153,7 +156,7 @@ const AddItemScreen = ({ navigation }) => {
     </TouchableOpacity>
     </View>
         
-    </View>
+    </ScrollView>
   );
 };
 
@@ -166,7 +169,7 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 10,
     fontSize: 16,
-    color: '#A6ACA7',
+    color: '#6F7863',
     fontWeight: 'bold',
     marginBottom: 4,
   },
@@ -207,7 +210,7 @@ gpsText:{
     fontSize: 18,
     fontStyle: 'italic',
     fontWeight: 'bold',
-    color: '#A6ACA7',
+    color: '#6F7863',
     textAlign: 'center',
 },
   image: {
@@ -216,6 +219,34 @@ gpsText:{
     height: 200,
     justifyContent: 'center',
     alignSelf: 'center',
+  },
+  blob: {
+    position: 'absolute',
+    borderRadius: 999,
+  },
+  blob1: {
+    width: 200,
+    height: 200,
+    backgroundColor: '#DDE0CC',
+    top: -30,
+    left: -50,
+    transform: [{ rotate: '20deg' }],
+  },
+  blob2: {
+    width: 250,
+    height: 250,
+    backgroundColor: '#A6ACA7',
+    top: 40,
+    right: -120,
+    transform: [{ rotate: '45deg' }],
+  },
+  blob3: {
+     width: 160,
+    height: 160,
+    backgroundColor: '#A3B8B1',
+    bottom: 50,
+    right: -40,
+    transform: [{ rotate: '-20deg' }],
   },
 
 });

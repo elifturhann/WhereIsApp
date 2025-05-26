@@ -15,6 +15,7 @@ const LandingScreen = ({ navigation }) => {
       {/* Foreground Content */}
       <View style={styles.content}>
         <Text style={styles.title}>Where Is App</Text>
+        
         <View style={styles.spacing} />
 
         <TouchableOpacity
@@ -22,13 +23,14 @@ const LandingScreen = ({ navigation }) => {
         onPress={() => navigation.navigate('AddItem')}>
         <Text style={styles.buttonText}>Add Items</Text>
         </TouchableOpacity>
-        
+
         <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('ListItems')}>
         <Text style={styles.buttonText}>List Items</Text>
         </TouchableOpacity>
       </View>
+      
     </View>
   );
 };

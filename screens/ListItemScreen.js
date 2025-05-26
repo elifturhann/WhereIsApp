@@ -55,15 +55,17 @@ const ListItemsScreen = ({ navigation }) => {
     <View style={styles.container}>
       <TextInput
         style={styles.searchBar}
-        placeholder="Search items by name"
+        placeholder=" 🔍 Search items by name"
         value={searchText}
         onChangeText={setSearchText}
       />
+      
       <FlatList
         data={filteredItems}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />
+      
     </View>
   );
 };
@@ -71,6 +73,7 @@ const ListItemsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    backgroundColor: '#FFFDF6',
     flex: 1,
   },
   searchBar: {
@@ -80,11 +83,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
   },
+  
   itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
+  backgroundColor: '#EEE5DA',
+  padding: 15,
+  borderRadius: 12,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 4,
+  elevation: 3, // Android shadow
+  marginBottom: 15,
+  flexDirection: 'row',
+  alignItems: 'center',
+},
   thumbnail: {
     width: 60,
     height: 60,
